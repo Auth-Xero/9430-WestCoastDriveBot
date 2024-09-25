@@ -19,5 +19,9 @@ public final class Constants {
     public static final int motorFrontRight = 2;
     public static final int motorBackLeft = 3;
     public static final int motorBackRight = 4; 
+
+  }
+  public static class DriveConstants {
+    public static final double DTSpeedmultiplier = 1.0;
   }
 }
