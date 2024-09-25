@@ -17,6 +17,7 @@ public class TankDriveCommand extends Command {
     this.george = controller;
     this.driveSubsystem = driveSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(this.driveSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -27,8 +28,8 @@ public class TankDriveCommand extends Command {
   @Override
   public void execute() {
 
-    double leftSpeed = -george.getLeftY();
-    double rightSpeed = -george.getRightY();
+    double leftSpeed = george.getLeftY();
+    double rightSpeed = george.getRightY();
     driveSubsystem.definitelyNotTankDrive(leftSpeed, rightSpeed);
 
   }
