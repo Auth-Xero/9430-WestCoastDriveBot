@@ -44,7 +44,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   }
 
-public void definitelyNotTankDrive(double leftSpeed, double rightSpeed) {
+public void tankDrive(double leftSpeed, double rightSpeed) {
 
 drive.tankDrive(leftSpeed, rightSpeed);
 
