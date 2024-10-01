@@ -31,20 +31,24 @@ public class TankDriveCommand extends Command {
   @Override
   public void execute() {
 
-    if(controller.getPOV()==0 && multiplier<1.0){
-      multiplier += 0.1;
+    // When D-pad up (0 degrees) is pressed, increase the multiplier value by 10% if it is not above 100%
+    if(controller.getPOV()==0 && multiplier<1.0){ 
+      multiplier += 0.1; 
     }
 
-    if(controller.getPOV()==180 && multiplier>0.0){
-      multiplier -= 0.1;
+    // When D-pad dow (180 degrees) is pressed, decrease the multiplier value by 10% if it is not below 0%
+    if(controller.getPOV()==180 && multiplier>0.0){ 
+      multiplier -= 0.1; 
     }
 
-    if(controller.getPOV()==90 ){
-      multiplier = 1.0;
+    // When D-pad right (90 degrees) is pressed, sets multiplier to 100%
+    if(controller.getPOV()==90 ){ 
+      multiplier = 1.0; 
     }
 
-    if(controller.getPOV()==270 ){
-      multiplier = 0.5;
+    // When D-pad left (270 degrees) is pressed, sets multiplier to 50%
+    if(controller.getPOV()==270 ){ 
+      multiplier = 0.5; 
     }
 
     double leftSpeed = controller.getLeftY() * multiplier;
