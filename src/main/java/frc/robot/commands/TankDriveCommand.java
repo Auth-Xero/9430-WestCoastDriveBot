@@ -9,11 +9,13 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TankDriveCommand extends Command {
   private XboxController controller;
   private DriveSubsystem driveSubsystem;
-  private double multiplier = Constants.DriveConstants.DTSpeedmultiplier;
+  private static double multiplier = Constants.DriveConstants.DTSpeedmultiplier;
+  private boolean pressed;
 
   /** Creates a new TankDriveCommand. */
   public TankDriveCommand(XboxController controller, DriveSubsystem driveSubsystem) {
@@ -31,29 +33,44 @@ public class TankDriveCommand extends Command {
   @Override
   public void execute() {
 
+    // When D-pad is not pressed, sets boolean pressed to false
+    if(controller.getPOV() == -1){ 
+      pressed = false;
+    }
+
     // When D-pad up (0 degrees) is pressed, increase the multiplier value by 10% if it is not above 100%
-    if(controller.getPOV()==0 && multiplier<1.0){ 
+    if(controller.getPOV() == 0 && multiplier < 1.0 && !pressed){ 
       multiplier += 0.1; 
+      pressed = true;
     }
 
     // When D-pad dow (180 degrees) is pressed, decrease the multiplier value by 10% if it is not below 0%
-    if(controller.getPOV()==180 && multiplier>0.0){ 
-      multiplier -= 0.1; 
+    if(controller.getPOV() == 180 && multiplier > 0.0 && !pressed){ 
+      multiplier -= 0.1;
+      pressed = true; 
     }
 
     // When D-pad right (90 degrees) is pressed, sets multiplier to 100%
-    if(controller.getPOV()==90 ){ 
+    if(controller.getPOV() == 90 && !pressed){ 
       multiplier = 1.0; 
+      pressed = true;
     }
 
     // When D-pad left (270 degrees) is pressed, sets multiplier to 50%
-    if(controller.getPOV()==270 ){ 
+    if(controller.getPOV() == 270 && !pressed){ 
       multiplier = 0.5; 
+      pressed = true;
     }
 
     double leftSpeed = controller.getLeftY() * multiplier;
     double rightSpeed = controller.getRightY() * multiplier;
     driveSubsystem.tankDrive(leftSpeed, rightSpeed);
+
+    // Log Variables
+    SmartDashboard.putString("Current Multiplier: ",""+multiplier);
+    SmartDashboard.putString("POV: ",""+controller.getPOV());
+    SmartDashboard.putString("L-Stick: ",""+controller.getLeftY());
+    SmartDashboard.putString("R-Stick: ",""+controller.getRightY());
 
   }
 
