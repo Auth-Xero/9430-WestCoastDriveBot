@@ -4,21 +4,20 @@
 
 package frc.robot.commands;
 
-
-import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.util.BetterXboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TankDriveCommand extends Command {
-  private XboxController controller;
+  private BetterXboxController controller;
   private DriveSubsystem driveSubsystem;
   private static double multiplier = Constants.DriveConstants.DTSpeedmultiplier;
   private boolean pressed;
 
   /** Creates a new TankDriveCommand. */
-  public TankDriveCommand(XboxController controller, DriveSubsystem driveSubsystem) {
+  public TankDriveCommand(BetterXboxController controller, DriveSubsystem driveSubsystem) {
     this.controller = controller;
     this.driveSubsystem = driveSubsystem;
     // Use addRequirements() here to declare subsystem dependencies.
