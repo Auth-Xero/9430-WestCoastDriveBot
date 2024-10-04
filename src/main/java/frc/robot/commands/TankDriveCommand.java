@@ -64,7 +64,7 @@ public class TankDriveCommand extends Command {
       pressed = true;
     }
 
-    // If multipler is outside of intented range it will set it back in
+    // If multipler is outside of intented range it will be set within the range
     if (multiplier > 1.0)
       multiplier = 1.0;
 
