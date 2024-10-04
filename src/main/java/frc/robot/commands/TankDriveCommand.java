@@ -26,50 +26,60 @@ public class TankDriveCommand extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
     // When D-pad is not pressed, sets boolean pressed to false
-    if(controller.getPOV() == -1){ 
+    if (controller.getPOV() == -1) {
       pressed = false;
     }
 
-    // When D-pad up (0 degrees) is pressed, increase the multiplier value by 10% if it is not above 100%
-    if(controller.getPOV() == 0 && multiplier < 1.0 && !pressed){ 
-      multiplier += 0.1; 
+    // When D-pad up (0 degrees) is pressed, increase the multiplier value by 10% if
+    // it is not above 100%
+    if (controller.getPOV() == 0 && multiplier < 1.0 && !pressed) {
+      multiplier += 0.1;
       pressed = true;
     }
 
-    // When D-pad dow (180 degrees) is pressed, decrease the multiplier value by 10% if it is not below 0%
-    if(controller.getPOV() == 180 && multiplier > 0.0 && !pressed){ 
+    // When D-pad dow (180 degrees) is pressed, decrease the multiplier value by 10%
+    // if it is not below 0%
+    if (controller.getPOV() == 180 && multiplier > 0.0 && !pressed) {
       multiplier -= 0.1;
-      pressed = true; 
+      pressed = true;
     }
 
     // When D-pad right (90 degrees) is pressed, sets multiplier to 100%
-    if(controller.getPOV() == 90 && !pressed){ 
-      multiplier = 1.0; 
+    if (controller.getPOV() == 90 && !pressed) {
+      multiplier = 1.0;
       pressed = true;
     }
 
     // When D-pad left (270 degrees) is pressed, sets multiplier to 50%
-    if(controller.getPOV() == 270 && !pressed){ 
-      multiplier = 0.5; 
+    if (controller.getPOV() == 270 && !pressed) {
+      multiplier = 0.5;
       pressed = true;
     }
 
-    double leftSpeed = controller.getLeftY() * multiplier;
-    double rightSpeed = controller.getRightY() * multiplier;
-    driveSubsystem.tankDrive(leftSpeed, rightSpeed);
+    // If multipler is outside of intented range it will set it back in
+    if (multiplier > 1.0)
+      multiplier = 1.0;
+
+    if (multiplier < 0.0)
+      multiplier = 0.0;
+
+    double speed = controller.getLeftY() * multiplier;
+    double rotation = controller.getRightX() * multiplier;
+    driveSubsystem.arcade(speed, rotation);
 
     // Log Variables
-    SmartDashboard.putString("Current Multiplier: ",""+multiplier);
-    SmartDashboard.putString("POV: ",""+controller.getPOV());
-    SmartDashboard.putString("L-Stick: ",""+controller.getLeftY());
-    SmartDashboard.putString("R-Stick: ",""+controller.getRightY());
+    SmartDashboard.putString("Current Multiplier: ", "" + multiplier);
+    SmartDashboard.putString("POV: ", "" + controller.getPOV());
+    SmartDashboard.putString("L-Stick Y: ", "" + controller.getLeftY());
+    SmartDashboard.putString("L-Stick X: ", "" + controller.getLeftX());
 
   }
 
@@ -78,7 +88,7 @@ public class TankDriveCommand extends Command {
   public void end(boolean interrupted) {
 
     driveSubsystem.tankDrive(0, 0);
-  
+
   }
 
   // Returns true when the command should end.
