@@ -44,11 +44,17 @@ public class DriveSubsystem extends SubsystemBase {
 
   }
 
-public void tankDrive(double leftSpeed, double rightSpeed) {
+  public void tankDrive(double leftSpeed, double rightSpeed) {
 
-drive.tankDrive(leftSpeed, rightSpeed);
+    drive.tankDrive(leftSpeed, rightSpeed);
 
-}
+  }
+
+  public void arcade(double speed, double rotation) {
+
+    drive.arcadeDrive(speed, rotation);
+
+  }
 
   @Override
   public void periodic() {
