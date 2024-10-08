@@ -1,8 +1,8 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: ''
-labels: ''
+title: 'BUG: '
+labels: 'bug'
 assignees: ''
 
 ---
@@ -33,6 +33,9 @@ If applicable, add screenshots to help explain your problem.
  - OS: [e.g. iOS8.1]
  - Browser [e.g. stock browser, safari]
  - Version [e.g. 22]
+
+ **Current Robot Version**
+If this bug is related to the robot, specify the robot code version or development branch information here. 
 
 **Additional context**
 Add any other context about the problem here.
