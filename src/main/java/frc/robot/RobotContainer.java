@@ -8,6 +8,7 @@ import frc.robot.Constants.OperatorConstants;
 import fec.robot.Constants.DriveConstants;
 import frc.robot.commands.TankDriveCommand;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.util.BetterXboxController;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -25,8 +26,8 @@ public class RobotContainer {
   private final DriveSubsystem m_exampleSubsystem = new DriveSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final XboxController m_driverController = 
-      new XboxController(OperatorConstants.kDriverControllerPort);
+  private final BetterXboxController m_driverController = 
+      new BetterXboxController(OperatorConstants.kDriverControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
