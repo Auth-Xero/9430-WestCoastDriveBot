@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.AutoDriveForward;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -62,7 +63,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     
-   return new SequentialCommandGroup();
+   return new AutoDriveForward(m_exampleSubsystem, 0.5, 0.5, 2);
     
   }
 }
