@@ -5,7 +5,7 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import fec.robot.Constants.DriveConstants;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.commands.TankDriveCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.util.BetterXboxController;
@@ -47,8 +47,8 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new POVButton(m_driverController, 0)
-            .whileTrue();
+    // new POVButton(m_driverController, 0)
+    //         .whileTrue();
     
   }
 
