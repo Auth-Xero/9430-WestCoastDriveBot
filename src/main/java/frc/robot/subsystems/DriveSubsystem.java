@@ -33,6 +33,7 @@ public class DriveSubsystem extends SubsystemBase {
   private MotorControllerGroup right = new MotorControllerGroup(motorFrontRight);
 
   private DifferentialDrive drive = new DifferentialDrive(left, right);
+  private RobotConfig config;
 
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
@@ -51,7 +52,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     // Load the RobotConfig from the GUI settings. You should probably
     // store this in your Constants file
-    RobotConfig config = null;
+    config = null;
     try{
       config = RobotConfig.fromGUISettings();
     } catch (Exception e) {
@@ -95,21 +96,39 @@ public class DriveSubsystem extends SubsystemBase {
 
   }
 
+  /**
+   * Returns the current Pose2d position from the gyroscope 
+   * @return Pose2d
+   */
   public Pose2d getPose() {
     return null;
   }
 
+  /**
+   * Resets the given Pose2d 
+   * @param pose
+   */
   public void resetPose(Pose2d pose) {
 
   }
 
+  /**
+   * Returns the current robot-relative ChassisSpeeds
+   * @return
+   */
   public ChassisSpeeds getRobotRelativeSpeeds() {
     return null;
   }
 
+  /**
+   * Outputs commands to the robot's drive motors given robot-relative ChassisSpeeds
+   * @param speeds
+   */
   public void driveRobotRelative(ChassisSpeeds speeds) {
 
   }
+
+  
 
   @Override
   public void periodic() {
