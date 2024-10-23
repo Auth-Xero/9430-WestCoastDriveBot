@@ -4,18 +4,15 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj.DriverStation;
+
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-import com.pathplanner.lib.auto.AutoBuilder;
+
 import com.pathplanner.lib.config.RobotConfig;
-import com.pathplanner.lib.controllers.PPLTVController;
 import com.revrobotics.*;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
@@ -33,7 +30,6 @@ public class DriveSubsystem extends SubsystemBase {
   private MotorControllerGroup right = new MotorControllerGroup(motorFrontRight);
 
   private DifferentialDrive drive = new DifferentialDrive(left, right);
-  private RobotConfig config;
 
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
@@ -49,39 +45,6 @@ public class DriveSubsystem extends SubsystemBase {
     motorBackLeft.follow(motorFrontLeft);
     motorBackRight.follow(motorFrontRight);
 
-
-    // Load the RobotConfig from the GUI settings. You should probably
-    // store this in your Constants file
-    config = null;
-    try{
-      config = RobotConfig.fromGUISettings();
-    } catch (Exception e) {
-      // Handle exception as needed
-      e.printStackTrace();
-    }
-
-    // Configure AutoBuilder last
-    AutoBuilder.configure(
-            this::getPose, // Robot pose supplier
-            this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
-            this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-            (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
-            new PPLTVController(0.02), // PPLTVController is the built in path following controller for differential drive trains
-            config, // The robot configuration
-            () -> {
-              // Boolean supplier that controls when the path will be mirrored for the red alliance
-              // This will flip the path being followed to the red side of the field.
-              // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
-
-              var alliance = DriverStation.getAlliance();
-              if (alliance.isPresent()) {
-                return alliance.get() == DriverStation.Alliance.Red;
-              }
-              return false;
-            },
-            this // Reference to this subsystem to set requirements
-    );
-
   }
 
   public void tankDrive(double leftSpeed, double rightSpeed) {
@@ -95,40 +58,6 @@ public class DriveSubsystem extends SubsystemBase {
     drive.arcadeDrive(speed, rotation);
 
   }
-
-  /**
-   * Returns the current Pose2d position from the gyroscope 
-   * @return Pose2d
-   */
-  public Pose2d getPose() {
-    return null;
-  }
-
-  /**
-   * Resets the given Pose2d 
-   * @param pose
-   */
-  public void resetPose(Pose2d pose) {
-
-  }
-
-  /**
-   * Returns the current robot-relative ChassisSpeeds
-   * @return
-   */
-  public ChassisSpeeds getRobotRelativeSpeeds() {
-    return null;
-  }
-
-  /**
-   * Outputs commands to the robot's drive motors given robot-relative ChassisSpeeds
-   * @param speeds
-   */
-  public void driveRobotRelative(ChassisSpeeds speeds) {
-
-  }
-
-  
 
   @Override
   public void periodic() {
