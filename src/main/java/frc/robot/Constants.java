@@ -25,6 +25,8 @@ public final class Constants {
   public static class DriveConstants {
     public static final double DTSpeedmultiplier = 1.0;
   }
+
   public static final int pigeonCANId = 1;
+  public static final int pigeonDataLogAmount = 10;
   
 }
