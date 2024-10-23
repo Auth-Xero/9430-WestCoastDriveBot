@@ -15,6 +15,7 @@ public class BetterPigeon2 {
 
     private final Pigeon2 pigeon;
     private Pose2d currentPose;
+    private int logQuantity;
     private ArrayList<Pose2d> previousPoses;
     private ArrayList<Double> previousTimes;
     private double lastTimestamp;
@@ -24,6 +25,10 @@ public class BetterPigeon2 {
         pigeon = new Pigeon2(Constants.pigeonCANId);
         // Initialize odometry with the starting pose and heading from the gyro
         odometry = new DifferentialDriveOdometry(getHeading(), 0, 0, currentPose);
+        logQuantity = Constants.pigeonDataLogAmount;
+        if (logQuantity < 2)
+            logQuantity = 2;
+
         previousPoses = new ArrayList<Pose2d>();
         previousTimes = new ArrayList<Double>();
     }
@@ -107,11 +112,14 @@ public class BetterPigeon2 {
 
         // Log Pose2d's and timestamps
         previousPoses.add(currentPose);
-        if (previousPoses.size() > 10) {
+        if (previousPoses.size() > logQuantity) {
             previousPoses.remove(0);
         }
 
         previousTimes.add(deltaTime);
+        if (previousTimes.size() > logQuantity) {
+            previousTimes.remove(0);
+        }
 
         // Update the pose
         currentPose = new Pose2d(
@@ -149,8 +157,6 @@ public class BetterPigeon2 {
      */
     public ChassisSpeeds getSpeedReletive() {
 
-        
-
         double dt = previousTimes.get(previousTimes.size() - 1);
 
         double dx = (previousPoses.get(previousPoses.size() - 1).getX() - currentPose.getX()) / dt;
@@ -162,7 +168,35 @@ public class BetterPigeon2 {
         return speeds;
     }
 
-    public void driveRobotRelative() {
+    public double getAccelerationRelative() {
+
+        ArrayList<Double> dx = new ArrayList<Double>();
+        for (int i = 1; i < logQuantity; i++) {
+            dx.add(previousPoses.get(i - 1).getX() - previousPoses.get(i).getX());
+        }
+
+        ArrayList<Double> dy = new ArrayList<Double>();
+        for (int i = 1; i < logQuantity; i++) {
+            dy.add(previousPoses.get(i - 1).getY() - previousPoses.get(i).getY());
+        }
+
+        ArrayList<Double> distances = new ArrayList<Double>();
+        for (int i = 1; i < logQuantity; i++) {
+            distances.add(Math.sqrt(Math.pow(dx.get(i), 2) + Math.pow(dy.get(i), 2)));
+        }
+
+        ArrayList<Double> ds = new ArrayList<Double>();
+        for (int i = 1; i < logQuantity; i++) {
+            ds.add(distances.get(i) / previousTimes.get(i));
+        }
+
+        double avarage = 0;
+        for (int i = 1; i < logQuantity; i++) {
+            avarage += ds.get(i);
+        }
+        avarage /= ds.size();
+
+        return avarage;
     }
 
 }
