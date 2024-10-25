@@ -152,8 +152,10 @@ public class BetterPigeon2 {
 
     /**
      * Return ChassisSpeeds representing the speed of the robot
+     * Calculated by the change in distance traveled divided by the change in time
+     * The speed the robot is rotating is also in the ChassisSpeeds
      * 
-     * @return
+     * @return ChassiSpeeds speeds
      */
     public ChassisSpeeds getSpeedReletive() {
 
@@ -163,11 +165,18 @@ public class BetterPigeon2 {
         double dy = (previousPoses.get(previousPoses.size() - 1).getY() - currentPose.getY()) / dt;
         double da = (previousPoses.get(previousPoses.size() - 1).getRotation().getRadians()
                 - currentPose.getRotation().getRadians()) / dt;
+        
+        // da = getAngularVelocity() * (Math.PI / 180.0);
 
         ChassisSpeeds speeds = new ChassisSpeeds(dx, dy, da);
         return speeds;
     }
 
+    /**
+     * Returns the avarage change in speed over the saved points
+     * 
+     * @return double representing the avarage change in speed
+     */
     public double getAccelerationRelative() {
 
         ArrayList<Double> dx = new ArrayList<Double>();
