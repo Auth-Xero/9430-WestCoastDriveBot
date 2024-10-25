@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-
+import frc.robot.util.BetterPathPlanner;
 
 import com.pathplanner.lib.config.RobotConfig;
 import com.revrobotics.*;
@@ -30,6 +30,8 @@ public class DriveSubsystem extends SubsystemBase {
   private MotorControllerGroup right = new MotorControllerGroup(motorFrontRight);
 
   private DifferentialDrive drive = new DifferentialDrive(left, right);
+
+  private BetterPathPlanner pathPlanner = new BetterPathPlanner(this);
 
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
